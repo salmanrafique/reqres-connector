@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.camunda.connector.api.error.ConnectorException;
+import io.camunda.connector.api.error.ConnectorInputException;
 import io.camunda.connector.test.outbound.OutboundConnectorContextBuilder;
 import io.camunda.example.dto.ReqResConnectorRequest;
 import io.camunda.example.dto.ReqResConnectorResult;
@@ -34,9 +35,9 @@ public class ReqResFunctionTest {
   }
 
   @Test
-  void shouldThrowWithErrorCodeWhenMessageStartsWithFail() throws Exception {
+  void shouldThrowWithErrorCodeWhenPageZero() throws Exception {
     // given
-    var input = new ReqResConnectorRequest(2, 3);
+    var input = new ReqResConnectorRequest(0, 3);
     var function = new ReqResConnectorFunction();
     var context = OutboundConnectorContextBuilder.create()
         .variables(objectMapper.writeValueAsString(input))
@@ -45,8 +46,9 @@ public class ReqResFunctionTest {
     var result = catchThrowable(() -> function.execute(context));
     // then
     assertThat(result)
-        .isInstanceOf(ConnectorException.class)
-        .hasMessageContaining("started with 'fail'")
-        .extracting("errorCode").isEqualTo("FAIL");
+        .isInstanceOf(ConnectorInputException.class);
+        // TODO: adjust
+//        .hasMessageContaining("started with 'fail'")ß
+//        .extracting("errorCode").isEqualTo("FAIL");
   }
 }

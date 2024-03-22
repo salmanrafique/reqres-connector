@@ -8,6 +8,7 @@ import io.camunda.connector.generator.java.annotation.ElementTemplate;
 import io.camunda.example.dto.ReqResConnectorRequest;
 import io.camunda.example.dto.ReqResConnectorResult;
 
+import org.hibernate.validator.internal.util.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,13 +42,14 @@ public class ReqResConnectorFunction implements OutboundConnectorFunction {
     // TODO: implement connector logic
     LOGGER.info("Executing my connector with request {}", connectorRequest);
     int page = connectorRequest.page();
+    LOGGER.info("page: ", page);
     int perPage = connectorRequest.per_page();
-    if (page == 0) {
+    if (page <1 ) {
       throw new ConnectorException("FAIL", "page value was " + page);
     }
 
 
-    
+
     return new ReqResConnectorResult("Response received: " + page);
   }
 }
