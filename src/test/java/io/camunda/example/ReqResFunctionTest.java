@@ -6,23 +6,21 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.camunda.connector.api.error.ConnectorException;
 import io.camunda.connector.test.outbound.OutboundConnectorContextBuilder;
-import io.camunda.example.dto.Authentication;
-import io.camunda.example.dto.MyConnectorRequest;
-import io.camunda.example.dto.MyConnectorResult;
+import io.camunda.example.dto.ReqResConnectorRequest;
+import io.camunda.example.dto.ReqResConnectorResult;
 import org.junit.jupiter.api.Test;
 
-public class MyFunctionTest {
+public class ReqResFunctionTest {
 
   ObjectMapper objectMapper = new ObjectMapper();
 
   @Test
-  void shouldReturnReceivedMessageWhenExecute() throws Exception {
+  void shouldReturnReceivedResultWhenExecute() throws Exception {
     // given
-    var input = new MyConnectorRequest(
-            "Hello World!",
-            new Authentication("testUser", "testToken")
+    var input = new ReqResConnectorRequest(
+            2,3
     );
-    var function = new MyConnectorFunction();
+    var function = new ReqResConnectorFunction();
     var context = OutboundConnectorContextBuilder.create()
       .variables(objectMapper.writeValueAsString(input))
       .build();
@@ -30,19 +28,16 @@ public class MyFunctionTest {
     var result = function.execute(context);
     // then
     assertThat(result)
-      .isInstanceOf(MyConnectorResult.class)
-      .extracting("myProperty")
-      .isEqualTo("Message received: Hello World!");
+      .isInstanceOf(ReqResConnectorResult.class)
+      .extracting("response")
+      .isEqualTo("Response received: 2");
   }
 
   @Test
   void shouldThrowWithErrorCodeWhenMessageStartsWithFail() throws Exception {
     // given
-    var input = new MyConnectorRequest(
-            "Fail: unauthorized",
-            new Authentication("testUser", "testToken")
-    );
-    var function = new MyConnectorFunction();
+    var input = new ReqResConnectorRequest(2, 3);
+    var function = new ReqResConnectorFunction();
     var context = OutboundConnectorContextBuilder.create()
         .variables(objectMapper.writeValueAsString(input))
         .build();
