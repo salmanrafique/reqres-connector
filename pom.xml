@@ -213,6 +213,13 @@
               </goals>
             </execution>
           </executions>
+          <configuration>
+          <connectors>
+            <connector>
+              <connectorClass>io.camunda.example.ReqResConnectorFunction</connectorClass>
+            </connector>
+          </connectors>
+        </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>

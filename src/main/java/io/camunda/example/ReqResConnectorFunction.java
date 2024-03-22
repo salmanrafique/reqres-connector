@@ -8,22 +8,16 @@ import io.camunda.connector.generator.java.annotation.ElementTemplate;
 import io.camunda.example.dto.ReqResConnectorRequest;
 import io.camunda.example.dto.ReqResConnectorResult;
 
-import java.io.DataOutputStream;
-import java.net.HttpURLConnection;
 import java.net.URI;
-import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.HashMap;
-import java.util.Map;
 
-import org.hibernate.validator.internal.util.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @OutboundConnector(
-    name = "REQRESCONNECTOR",
+    name = "REQRESCONNECTOR", 
     inputVariables = {"pagination", "page","pagination", "per_page"},
     type = "io.camunda:reqres:1")
 @ElementTemplate(
@@ -34,8 +28,7 @@ import org.slf4j.LoggerFactory;
     icon = "icon.svg",
     documentationRef = "https://reqres.in/",
     propertyGroups = {
-      @ElementTemplate.PropertyGroup(id = "pagination", label = "Paginatioin"),
-      @ElementTemplate.PropertyGroup(id = "compose", label = "Compose")
+      @ElementTemplate.PropertyGroup(id = "pagination", label = "Pagination")
     },
     inputDataClass = ReqResConnectorRequest.class)
 public class ReqResConnectorFunction implements OutboundConnectorFunction {
