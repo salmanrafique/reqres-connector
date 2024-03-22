@@ -46,9 +46,7 @@ public class ReqResFunctionTest {
     var result = catchThrowable(() -> function.execute(context));
     // then
     assertThat(result)
-        .isInstanceOf(ConnectorInputException.class);
-        // TODO: adjust
-//        .hasMessageContaining("started with 'fail'")ß
-//        .extracting("errorCode").isEqualTo("FAIL");
+        .isInstanceOf(ConnectorInputException.class)
+        .hasMessageContaining("page: Validation failed");
   }
 }

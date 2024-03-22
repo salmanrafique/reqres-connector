@@ -40,9 +40,8 @@ public class ReqResConnectorFunction implements OutboundConnectorFunction {
 
   private ReqResConnectorResult executeConnector(final ReqResConnectorRequest connectorRequest) {
     // TODO: implement connector logic
-    LOGGER.info("Executing my connector with request {}", connectorRequest);
+    LOGGER.info("Executing reqres connector with request {}", connectorRequest);
     int page = connectorRequest.page();
-    LOGGER.info("page: ", page);
     int perPage = connectorRequest.per_page();
     if (page <1 ) {
       throw new ConnectorException("FAIL", "page value was " + page);
