@@ -31,7 +31,7 @@ public class ReqResFunctionTest {
     assertThat(result)
       .isInstanceOf(ReqResConnectorResult.class)
       .extracting("response")
-      .isEqualTo("Response received: 2");
+      .asString().contains("\"page\":2,\"per_page\":3,\"total\":12");
   }
 
   @Test

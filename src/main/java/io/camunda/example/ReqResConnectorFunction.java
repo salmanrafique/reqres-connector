@@ -8,6 +8,16 @@ import io.camunda.connector.generator.java.annotation.ElementTemplate;
 import io.camunda.example.dto.ReqResConnectorRequest;
 import io.camunda.example.dto.ReqResConnectorResult;
 
+import java.io.DataOutputStream;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.hibernate.validator.internal.util.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,8 +57,26 @@ public class ReqResConnectorFunction implements OutboundConnectorFunction {
       throw new ConnectorException("FAIL", "page value was " + page);
     }
 
+    URI uri = URI.create("https://reqres.in/api/users?page="+page+"&per_page="+perPage); 
+    HttpRequest httpRequest = HttpRequest.newBuilder() 
+        .GET() 
+        .uri(uri) 
+        .build();
+ 
+    try (HttpClient httpClient = HttpClient.newHttpClient()) { 
+     
+      HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+      LOGGER.info("Status Code: " + httpResponse.statusCode()); 
+      LOGGER.info("Response Body: " + httpResponse.body()); 
+
+      return new ReqResConnectorResult("Response received: " + httpResponse.body());
+
+    } catch (Exception e) { 
+      e.printStackTrace();
+      throw new ConnectorException("FAIL", e.getMessage());
+    } 
 
 
-    return new ReqResConnectorResult("Response received: " + page);
+   
   }
 }
