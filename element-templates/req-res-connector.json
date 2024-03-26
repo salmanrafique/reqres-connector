@@ -1,7 +1,7 @@
 {
   "$schema" : "https://unpkg.com/@camunda/zeebe-element-templates-json-schema/resources/schema.json",
-  "name" : "Reqres Connector",
-  "id" : "io.camunda.connector.Template.v1",
+  "name" : "ReqRes Connector",
+  "id" : "io.camunda.connector.ReqRes.v1",
   "description" : "Helps to connect to the reqres API",
   "documentationRef" : "https://reqres.in/",
   "version" : 1,

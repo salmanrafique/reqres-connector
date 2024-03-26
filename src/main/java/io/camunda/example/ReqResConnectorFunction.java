@@ -21,8 +21,8 @@ import org.slf4j.LoggerFactory;
     inputVariables = {"pagination", "page","pagination", "per_page"},
     type = "io.camunda:reqres:1")
 @ElementTemplate(
-    id = "io.camunda.connector.Template.v1",
-    name = "Reqres Connector",
+    id = "io.camunda.connector.ReqRes.v1",
+    name = "ReqRes Connector",
     version = 1,
     description = "Helps to connect to the reqres API",
     icon = "icon.svg",
@@ -42,7 +42,6 @@ public class ReqResConnectorFunction implements OutboundConnectorFunction {
   }
 
   private ReqResConnectorResult executeConnector(final ReqResConnectorRequest connectorRequest) {
-    // TODO: implement connector logic
     LOGGER.info("Executing reqres connector with request {}", connectorRequest);
     int page = connectorRequest.page();
     int perPage = connectorRequest.per_page();
