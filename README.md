@@ -1,31 +1,21 @@
-> A Connector template for new C8 outbound connector
->
-> To use this template update the following resources to match the name of your connector:
->
-> * [README](./README.md) (title, description)
+# ReqRes Connector Example
+
+A Camunda 8 example connector working with https://reqres.in/
+
+
 > * [Element Template](./element-templates/template-connector.json)
 > * [POM](./pom.xml) (artifact name, id, description)
-> * [Connector Function](src/main/java/io/camunda/example/MyConnectorFunction.java) (rename, implement, update `OutboundConnector` annotation)
-> * [Service Provider Interface (SPI)](./src/main/resources/META-INF/services/io.camunda.connector.api.outbound.OutboundConnectorFunction) (rename)
->
-> ...and delete this hint.
+> * [Connector Function](src/main/java/io/camunda/example/ReqResConnectorFunction.java)
+> * [Service Provider Interface (SPI)](./src/main/resources/META-INF/services/io.camunda.connector.api.outbound.OutboundConnectorFunction)
 > 
 > Read more about [creating Connectors](https://docs.camunda.io/docs/components/connectors/custom-built-connectors/connector-sdk/#creating-a-custom-connector)
 >
 > Check out the [Connectors SDK](https://github.com/camunda/connector-sdk)
 
 
-# Connector Template
-
-Camunda Outbound Connector Template
-
-Emulates a simple outbound connector function that takes a message and echoes it back.
-
-The function will throw an exception if your message starts with `fail`. This can be used to test error handling.
-
 ## Build
 
-You can package the Connector by running the following command:
+You can package the Connector by running:
 
 ```bash
 mvn clean package
@@ -52,25 +42,23 @@ provides more details on relocations.
 
 | Name     | Description      | Example           | Notes                                                                      |
 |----------|------------------|-------------------|----------------------------------------------------------------------------|
-| username | Mock username    | `alice`           | Has no effect on the function call outcome.                                |
-| token    | Mock token value | `my-secret-token` | Has no effect on the function call outcome.                                |
-| message  | Mock message     | `Hello World`     | Echoed back in the output. If starts with 'fail', an error will be thrown. |
+| page | controll page number to fetch    | `2`           |  Affects which entries will be returned |
+| per_page    | Controll how many entries will be retruned per page | `3` | Affcets the numbe rof entries on a page and the result set size |
 
 ### Output
 
+"Response received: " + http response body
+
+Response Body: 
 ```json
-{
-  "result": {
-    "myProperty": "Message received: ..."
-  }
-}
+{"page":2,"per_page":3,"total":12,"total_pages":4,"data":[{"id":4,"email":"eve.holt@reqres.in","first_name":"Eve","last_name":"Holt","avatar":"https://reqres.in/img/faces/4-image.jpg"},{"id":5,"email":"charles.morris@reqres.in","first_name":"Charles","last_name":"Morris","avatar":"https://reqres.in/img/faces/5-image.jpg"},{"id":6,"email":"tracey.ramos@reqres.in","first_name":"Tracey","last_name":"Ramos","avatar":"https://reqres.in/img/faces/6-image.jpg"}],"support":{"url":"https://reqres.in/#support-heading","text":"To keep ReqRes free, contributions towards server costs are appreciated!"}}
 ```
 
 ### Error codes
 
 | Code | Description                                |
 |------|--------------------------------------------|
-| FAIL | Message starts with 'fail' (ignoring case) |
+| FAIL | returns errro message of errro caught      |
 
 ## Test locally
 
@@ -97,4 +85,4 @@ It is not mandatory to generate the element template for your connector and you 
 However, the generator provides a convenient way to create the template and keep it in sync with the connector input class
 and empowers you to prototype and iterate quickly.
 
-The generated element template can be found in [element-templates/template-connector.json](./element-templates/template-connector.json).
+The generated element template can be found in [element-templates/req-res-connector.json](./element-templates/req-res-connector.json).
